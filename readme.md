@@ -102,7 +102,7 @@ var events = require('events');
 var inherits = require('inherits');
 
 function BlurInput ($input, validate) {
-    if (!(this instanceof BlurInput)) return new BlurInput($el, validate);
+    if (!(this instanceof BlurInput)) return new BlurInput($input, validate);
 
     var me = this;
 
