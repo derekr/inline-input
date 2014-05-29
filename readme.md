@@ -89,3 +89,62 @@ i.on('data', function (val) {
 # i.canValidate(boolean)
 
 Force `invalid` to be emitted even if `valid` never emitted.
+
+# Intention
+
+This is meant to be the basic-cover-most-cases implementation of
+an inline input validation module. There are cases where you don't
+want to validate on keyup, perhaps on blur makes more sense – what
+you could do instead:
+
+```js
+var events = require('events');
+var inherits = require('inherits');
+
+function BlurInput ($input, validate) {
+    if (!(this instanceof BlurInput)) return new BlurInput($el, validate);
+
+    var me = this;
+
+    this.original = $input.value;
+
+    $input.addEventListener('blur', function () {
+        if ($input.value === me.original) {
+            return me.emit('original', $input.value);
+        }
+
+        validate($input.value, function (err) {
+            if (err) return me.emit('invalid', err);
+
+            me.emit('valid', $input.value);
+        });
+    });
+};
+
+inherits(BlurInput, events.EventEmitter);
+
+BlurInput.prototype.update = function (val) {
+    this.original = val;
+};
+
+module.exports = BlurInput;
+```
+
+Should probably just make that a real module... :p If you're
+really keen you could create a module that consumes `InlineInput` and
+adds additional validation triggers (eg validate syntax w/ `InlineInput` then
+validate against a data store on blur).
+
+The main things are:
+
+* The module should be an `EventEmitter`
+* Emit the following events:
+  * `data` when input is valid and provide the input value
+  * `invalid` when input is invalid
+  * `original` when input is returned to original value
+  * `validating` if your validation logic is async this should be emitted
+* Have an `update` method for updating the original value.
+
+A common interface for validation really the ultimate goal allowing
+other modules to tap in to expected validation events and doing custom
+UI changes or generic client side form handling.
