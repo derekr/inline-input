@@ -1,0 +1,37 @@
+{
+  "name": "inline-input",
+  "version": "0.0.1",
+  "description": "Generic inline input event emitter.",
+  "main": "index.js",
+  "scripts": {
+    "test-browser": "run-browser tests/browser/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/derekr/inline-input"
+  },
+  "keywords": [
+    "inline",
+    "input",
+    "html",
+    "forms",
+    "validation"
+  ],
+  "author": "Derek Reynolds <drk@diy.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/derekr/inline-input/issues"
+  },
+  "homepage": "https://github.com/derekr/inline-input",
+  "devDependencies": {
+    "tape": "^2.13.1",
+    "browserify": "^4.1.6",
+    "testling": "^1.6.1",
+    "run-browser": "^1.3.1",
+    "simulate": "0.0.3"
+  },
+  "dependencies": {
+    "input-has-changed": "0.0.1",
+    "inherits": "^2.0.1"
+  }
+}
